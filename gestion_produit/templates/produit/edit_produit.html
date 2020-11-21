@@ -1,0 +1,78 @@
+<div class="container">
+    {% include "./header.html" %}
+    <div style="margin-left: 50px;">
+
+
+        <h1>Modifier produit</h1>
+        {% if error %}
+        <i style="color: red;">{{ error }}</i>
+        {% endif %}
+        <form action="{% url 'gestion_produit:save_edit_produit' produit_edited.id %}" enctype="multipart/form-data" method="post" class="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label  class="col-lg-2
+                    control-label">Catégorie:</label>
+                <div class="col-lg-6">
+                    <select   name="categorie" class="form-control">
+                        <option value="{{ produit_edited.categorie }}">{{ produit_edited.categorie }}</option>
+                        {% for categorie in categories %}
+                        <option value="{{ categorie }}" >{{categorie}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" style="margin-left: 540px;">
+                <label for="description" class="col-lg-2 control-label">Description:</label>
+                <div class="col-lg-6">
+                    <textarea class="form-control" name="description"
+                        id="categorie">{{produit_edited.description }}</textarea>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: -100px;">
+                <label for="Libelle" class="col-lg-2 control-label">Libelle:</label>
+                <div class="col-lg-6">
+                    <input type="text" class="form-control" id="libelle"
+                        name="libelle" value="{{produit_edited.libelle }}"
+                       >
+                </div>
+            </div>
+            <div class="form-group" >
+                <label for="image1">Image 1:</label>
+                <div class="col-lg-6">
+                    <input type="file" id="image1" name="imageun" value="{{ produit_edited.image1.url }}"
+                        placeholder="Image 1">
+                        <img src="{{ produit_edited.image1.url }}" height="50px"/>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label for="image1">Image 2:</label>
+                <div class="col-lg-6">
+                    <input type="file" id="image2" name="imagedeux" value="{{ produit_edited.image2.url }}"
+                        placeholder="Image 2">
+                        <img src="{{ produit_edited.image2.url }}" height="50px"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="prix_u" class="col-lg-2 control-label">Prix unitaire:</label>
+                <div class="col-lg-6">
+                    <input type="number" class="form-control" id="prix_u"
+                        name="prix_u" value="{{produit_edited.prix_u }}"
+                        placeholder="Entrez le Prix unitaire">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="quantite" class="col-lg-2 control-label">Quantité:</label>
+                <div class="col-lg-6"> 
+                    <input type="number" class="form-control" id="quantite"
+                        name="quantite" value="{{produit_edited.quantite }}"
+                        placeholder="Entrez la Quantité">
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-primary" class="col-lg-6">
+                Submit
+            </button>
+        </form>
+    </div>
+
+</div>

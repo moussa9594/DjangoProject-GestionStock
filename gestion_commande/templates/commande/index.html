@@ -1,0 +1,97 @@
+<div class="container">
+    {% include "./header.html" %}
+    
+    <div class="row">
+        <div class="col-lg-2" >
+            <div class="text-center" style="font-weight: bold;">Categories</div>
+            {% if produit_list %}
+                {% for categorie in categories %}
+            <div class="categorie">
+                    {% if categorie.libelle == same_categorie.libelle  %}
+                <a href="{% url 'gestion_commande:produits' categorie.id %}" 
+                style="font-weight: bolder; font-size: 20px;" class="text-success">
+                {{ categorie.libelle }} 
+                <i  style="float: right;">
+                    <i class="fa fa-hand-o-right fa-lg" aria-hidden="true"></i>
+                </i>
+            </a>
+                    {% else %}
+            <a href="{% url 'gestion_commande:produits' categorie.id %}" >
+                {{ categorie.libelle }} 
+            </a>
+                    {% endif %}
+        </div>
+                {% endfor %}
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-8 row flex">
+            
+            {% for produit in produit_list %}
+            <div class="col-6">
+                <div class="card" style="margin-bottom: 4px;" >
+                    <div class="card-body" style="box-shadow: 0px 0px 9px gray;" height="10px" >
+                        <h5 class="card-title" style="font-weight: bolder;">{{ produit.libelle }} 
+                            <img  height="60px" style="float: right; box-shadow: 0px 20px 16px grey;" 
+                            src="{{ produit.image1.url }}" alt="Card image cap">
+                        </h5>
+                        
+                        <h1 class="text-success" style="font-weight: bold;">{{produit.prix_u}}
+                            <i style="font-weight: 100; font-size: 15px;">FCFA</i></h1>
+                        <!-- <h6 class="text-secondary">{{ produit.description }}...</h6> -->
+                        <div style="float: right;">
+                            <a style="margin-right: 20px;" class="text-info" href="{% url 'gestion_commande:detail' produit.id %}">
+                                <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                            </a>
+                            <a style="margin-right: 20px;" class="btn btn-outline-success" href="{% url 'gestion_commande:add_quantite' produit.id %}">
+                                Ajouter dans mon panier<i class=" text-warning fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% elif mes_produits %}
+            {% for categorie in categories %}
+            <div class="categorie">
+            <a href="{% url 'gestion_commande:produits' categorie.id %}" >
+                {{ categorie.libelle }} 
+            </a>
+            </div>
+                {% endfor %}
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-8 row flex">
+            
+            {% for produit in mes_produits %}
+            <div class="col-6">
+                <div class="card" style="margin-bottom: 4px;" >
+                    <div class="card-body" style="box-shadow: 0px 0px 9px gray;" height="10px" >
+                        <h5 class="card-title" style="font-weight: bolder;">{{ produit.libelle }} 
+                            <img  height="60px" style="float: right; box-shadow: 0px 20px 16px grey;" 
+                            src="{{ produit.image1.url }}" alt="Card image cap">
+                        </h5>
+                        
+                        <h1 class="text-success" style="font-weight: bold;">{{produit.prix_u}}
+                            <i style="font-weight: 100; font-size: 15px;">FCFA</i></h1>
+                        <!-- <h6 class="text-secondary">{{ produit.description }}...</h6> -->
+                        <div style="float: right;">
+                            <a style="margin-right: 20px;" class="text-info" href="{% url 'gestion_commande:detail' produit.id %}">
+                                <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                            </a>
+                            <a style="margin-right: 20px;" class="text-warning" href="{% url 'gestion_commande:add_quantite' produit.id %}">
+                                <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No products are available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    
+    
+</div>

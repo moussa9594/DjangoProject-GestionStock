@@ -1,0 +1,9 @@
+{# Load the tag library #}
+{% if employe.role == 'g_p' %}
+{% include "produit/header.html" %}
+{% elif employe.role == 'g_f' %}
+{% include "fournisseur/header.html" %}
+{% else %}
+{% endif %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'employe/font-awesome/css/font-awesome.min.css' %}">

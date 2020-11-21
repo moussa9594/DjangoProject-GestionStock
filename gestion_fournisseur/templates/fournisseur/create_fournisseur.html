@@ -1,0 +1,33 @@
+<div class="container">
+    {% include "./header.html" %}
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-7">
+            <h1 style="margin-left: 120px;">Nouveau fournisseur</h1>
+    {% if error %} <i style="color: red;">{{ error }}</i>
+    {% endif %}
+    <form action="{% url 'gestion_fournisseur:save_fournisseur' %}"
+    method="post" class="form">
+    {% csrf_token %}
+    {% for field in form %}
+        {% bootstrap_field field %} 
+    {% endfor %}
+                
+        {% buttons %}
+        <button type="submit" class="btn btn-primary" class="col-lg-6">
+            Submit
+        </button>
+        {% endbuttons %}
+    </form>
+        </div>
+
+
+    </div>
+
+</div>

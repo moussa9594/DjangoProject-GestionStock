@@ -1,0 +1,40 @@
+{% load static %}
+<div class="container">
+    {% include "./header.html" %}
+   
+    <link rel="stylesheet" type="text/css" href="{% static
+        'gestion_produit/style.css' %}">
+
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            
+            <form class="form" action="{% url 'employe:save_message' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label id="destinataire">Expéditeur:</label>
+                    <input type="email" readonly class="form-control" value="{{ message.employe.email }}" name="destinataire"/>
+                </div>
+                <div class="form-group">
+                    <label id="objet">Objet:</label>
+                    <input type="email" readonly class="form-control" style="font-weight: bold;" value="{{ message.objet }}" name="objet"/>
+                </div>
+                <div class="form-group">
+                    <p>
+                        Date: {{ message.date }}
+                    </p>
+                    {{ message.text }}
+                </div>
+                <div class="form-group">
+                    <label id="text">Votre réponse:</label>
+                    <textarea  required="required" placeholder="Votre réponse..." name="text" class="form-control">
+                    </textarea>
+                </div>
+                <input class="btn btn-outline-success fa fa-telegram" type="submit" value="Envoyer votre reponse"/>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>

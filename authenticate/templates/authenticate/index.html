@@ -1,0 +1,54 @@
+<div class="container">
+    {% include "./header.html" %}
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+
+
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <h1>Authentification</h1>
+            {% if change_password == 'oui' %}
+            {% if login_failed %} <i style="color: red;">{{ login_failed }}</i>{%endif %}
+            <form action="{% url 'authenticate:login' %}" method="post" class="form">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% bootstrap_field field %}
+                {% endfor %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary" colspan="2">
+                    Submit
+                </button>
+                {% endbuttons %}
+            </form>
+            {% endif %}
+
+            <!--  -->
+            {% if change_password == 'non' %}
+            <p>Vous devez obligatoirement changer votre mot de passe.</p>
+            <form action="{% url 'authenticate:change_pwd' %}" method="post" class="form">
+                {% csrf_token %}
+                <input type="password" name="pwd1" class="form-control" placeholder="Entrez votre mot de passe"/>
+                <input type="password" name="pwd2" class="form-control" placeholder="Confirmer le mot de passe"/>
+                {% if pwd1_Eq_pwd2 == 'non' %}
+                    <i style="color: red">Les mots de passe ne sont pas identiques.</i>
+                {% endif %}
+                {% if pwd1_Eq_pwd2_Eq_passer == 'oui' %}
+                    <i style="color: red">Votre mot de passe doit être différent à l'ancien.</i>
+                {% endif %}
+                <button type="submit" class="btn btn-primary" >
+                    Submit
+                </button>
+            </form>
+            {% endif %}
+            <!--  -->
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+</div>

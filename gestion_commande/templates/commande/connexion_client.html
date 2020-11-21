@@ -1,0 +1,156 @@
+<div class="container">
+    {% include "./header.html" %}
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.login-page1 {
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.login-page2 {
+    margin-left: 350px;
+    margin-right: 350px;
+  }
+.form {
+  
+  background: #FFFFFF;
+  max-width: 100%;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+}
+.form input, textarea, select {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.login-page1 button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 80%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  margin-left: 50px;
+}
+.login-page2 button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #43A047;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+
+.container .info {
+  margin: 50px auto;
+  text-align: center;
+}
+.container .info h1 {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 36px;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+.container .info span {
+  color: #4d4d4d;
+  font-size: 12px;
+}
+.container .info span a {
+  color: #000000;
+  text-decoration: none;
+}
+.container .info span .fa {
+  color: #EF3B3A;
+}
+
+    </style>
+    <div class="login-page">
+        <div class="form">
+          <p>
+              <i style="color: red;">{{ error }}</i>
+          </p>
+          <p style="font-weight: bolder;">Connectez-vous ou vous inscrire pour faire des commandes.</p>
+          <form class="register-form login-page1" method="post" action="{% url 'gestion_commande:valid_connexion' %}">
+            {% csrf_token %} 
+            <div class="row">
+
+                  <div class="col-lg-5">
+                      
+                      <input name="prenom" type="text" placeholder="prenom"/>
+                      <input name="nom" type="text" placeholder="nom"/>
+                      <input name="telephone" type="text" placeholder="telephone"/>
+                      <input name="email" type="email" placeholder="email address"/>
+                      <select name="sexe">
+                        <option value="Masculin">Sexe(default: Masculin)</option>
+                        <option value="Masculin">Masculin</option>
+                        <option value="Feminin">Feminin</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5">
+                      <input name="login" type="text" placeholder="login"/>
+                      <input name="password" type="password" placeholder="password"/>
+                      <input name="password2" type="password" placeholder="password again"/>
+                      <textarea type="text" name="adresse" placeholder="Adresse"></textarea>
+                    </div>
+                  <button>create</button>
+                </div>
+                <p class="message">Already registered? <a href="#">Sign In</a></p>
+          </form>
+          <form class="login-form login-page2" method="post" action="{% url 'gestion_commande:check_connexion' %}">
+            {% csrf_token %} 
+            <input type="text" name="login" placeholder="username"/>
+            <input type="password" name="password" placeholder="password"/>
+            <button>login</button>
+            <p class="message">Not registered? <a href="#">Create an account</a></p>
+          </form>
+        </div>
+      </div>
+
+      <script language="javascript"></script>
+<script>
+    $(document).ready(function(){
+
+    $('.message a').click(function(){
+        $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+     });
+
+    });
+</script>
+    

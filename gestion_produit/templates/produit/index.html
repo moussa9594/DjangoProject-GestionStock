@@ -1,0 +1,83 @@
+<div class="container">
+    {% include "./header.html" %}
+    
+    <div class="row">
+        <div class="col-lg-2" >
+            <div class="text-center" style="font-weight: bold;">Categories</div>
+            {% if categories %}
+            {% for categorie in categories %}
+            <div class="categorie">
+                {% if categorie.libelle == same_categorie.libelle  %}
+                <a href="{% url 'gestion_produit:produit' categorie.id %}" 
+                style="font-weight: bolder; font-size: 20px;" class="text-success">
+                {{ categorie.libelle }} 
+                <i  style="float: right;">
+                    <i class="fa fa-hand-o-right fa-lg" aria-hidden="true"></i>
+                </i>
+            </a>
+            {% else %}
+            <a href="{% url 'gestion_produit:produit' categorie.id %}" >
+                {{ categorie.libelle }} 
+            </a>
+            {% endif %}
+        </div>
+        {% endfor %}
+            {% endif %}
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-8 row flex">
+            {% if produit_list %}
+            {% for produit in produit_list %}
+            <div class="col-6">
+                <div class="card" style="margin-bottom: 4px;" >
+                    <div class="card-body" style="box-shadow: 0px 0px 9px gray;" height="10px" >
+                        <h5 class="card-title">{{ produit.libelle }} 
+                            <img  height="60px" style="float: right; box-shadow: 0px 20px 16px grey;" 
+                            src="{{ produit.image1.url }}" alt="Card image cap">
+                        </h5>
+                        <h5 class="card-subtitle mb-2 text-muted">Stock: 
+                            {% if produit.quantite < 10 %}
+                            <i style="background-color: crimson; 
+                            color: white; font-weight: bold; padding: 3px; border-radius: 7px;">
+                            {{produit.quantite}}
+                        </i>
+                            {% elif produit.quantite >= 10 and produit.quantite < 50 %}
+                            <i style="background-color:cornflowerblue; 
+                            color: white; font-weight: bold; padding: 3px; border-radius: 7px;">
+                            {{produit.quantite}}
+                        </i>
+                            {% else %}
+                            <i style="background-color: green; 
+                            color: white; font-weight: bold; padding: 3px; border-radius: 7px;">
+                            {{produit.quantite}}
+                            </i>
+                            {% endif %}
+                        </h5>
+                        <h1 class="text-primary" style="font-weight: bold;">{{produit.prix_u}}
+                            FCFA</h1>
+                        <!-- <h6 class="text-secondary">{{ produit.description }}...</h6> -->
+                        <div style="float: right;">
+                            <a style="margin-right: 20px;" class="text-info" href="{% url 'gestion_produit:detail' produit.id %}">
+                                <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+                            </a>
+                            <a style="margin-right: 20px;" class="text-success"  href="{% url 'gestion_produit:edit_produit' produit.id %}">
+                                <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                            </a>
+                            <a style="margin-right: 20px;" class="text-danger" href="{% url 'gestion_produit:delete_produit' produit.id %}">
+                                <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No products are available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    
+    
+    {% include "./footer.html" %}
+</div>

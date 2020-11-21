@@ -1,0 +1,81 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'gestion_fournisseur/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'gestion_fournisseur/font-awesome/css/font-awesome.min.css' %}">
+
+
+<div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-home  text-info" aria-hidden="true"></i>
+      </a>
+      {% if messages.count > 0 %}
+      <a class="navbar-brand" href="{% url 'employe:get_messages' %}" title="Contacter le gestionnaire de fournisseur.">
+        <i class="fa fa-envelope  text-danger" aria-hidden="true">
+          <i style="font-weight: bolder; color: white;">{{ messages.count }}</i>
+        </i>
+      </a>
+      {% else %}
+      <a class="navbar-brand" href="{% url 'employe:get_messages' %}" title="Contacter le gestionnaire de fournisseur.">
+        <i class="fa fa-envelope  text-default" aria-hidden="true"></i>
+      </a>
+      {% endif %}
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item btn btn-default" style="margin-right: 15px; border: 1px solid white;">
+          <a class="nav-link"  style="margin-top: -9px; margin-right:10px; font-weight: bold; color: white;" 
+              href="{% url 'gestion_fournisseur:create_fournisseur' %}">
+            Nouveau <i class="fa fa-user" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li class="nav-item btn btn btn-default" style="margin-right: 15px; border: 1px solid white;">
+          <a class="nav-link"  style="margin-top: -9px; margin-right:10px; font-weight: bold; color: white;" 
+              href="{% url 'gestion_fournisseur:fournisseur' %}">
+            fournisseurs <i class="fa fa-group" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li class="nav-item btn btn-default" style="border: 1px solid white;">
+          <a class="nav-link " style="margin-top: -9px; font-weight: bold; color: white; " 
+              href="{% url 'gestion_fournisseur:approuver_demande'  %}">
+              Etat des devis <i class="fa fa-truck" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search"
+          aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{employe_login}} <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Mon compte <i class="fa fa-user" aria-hidden="true"></i></a>
+          <a class="dropdown-item text-danger" href="{% url 'authenticate:logout' %}">Déconnexion <i class="fa fa-power-off" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <!-- <a href="{% url 'authenticate:logout' %}">
+        <div style="color: white;">
+          {{employe_login}} <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+        </div>
+      </a>  -->
+    </div>
+  </nav>
+</div>
+<div  style="margin-bottom: 50px;">
+  <div class="text-center" style="font-weight: bold; border-bottom: 1px solid grey; border-radius: 0px 0px 20px 20px;">
+    <img src="{% static 'gestion_fournisseur/four.jpg' %}" alt="My image" width="50%">
+  </div>
+</div>

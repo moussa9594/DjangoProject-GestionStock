@@ -1,0 +1,49 @@
+<div class="container">
+    {% include "./header.html" %}
+
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+            {% if fournisseurs %}
+            <table class="table table-striped table-hover ">
+                <tr class="alert-primary text-center">
+                    <th>Prenom</th>
+                    <th>Nom</th>
+                    <th>téléphone</th>
+                    <th>sexe</th>
+                    <th>Email</th>
+                    <th>Adresse</th>
+                    <th>Action</th>
+                </tr>
+            {% for fournisseur in fournisseurs %}
+                <tr class="text-center">
+                    <td>{{fournisseur.prenom}}</td>
+                    <td>{{fournisseur.nom}}</td>
+                    <td>{{fournisseur.telephone}}</td>
+                    <td>{{fournisseur.sexe}}</td>
+                    <td>{{fournisseur.email}}</td>
+                    <td>{{fournisseur.adresse}}</td>
+                    <td width="100%">
+                        <a class="btn btn-primary" href="{% url 'gestion_fournisseur:detail' fournisseur.id %}">
+                            <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-success" href="#">
+                            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i> 
+                        </i></a>
+                        <a class="btn btn-danger" href="#">
+                            <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+                {% else %}
+                <p>No Fournissors are available.</p>
+                {% endif %}
+        </div>
+        
+    </div>
+
+
+
+</div>

@@ -1,0 +1,84 @@
+{% load static %}
+<div class="container">
+    {% include "./header.html" %}
+   
+    <link rel="stylesheet" type="text/css" href="{% static
+        'gestion_produit/style.css' %}">
+    
+         <!-- Font Awesome -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Bootstrap -->
+<link href="{% static 'gestion_fournisseur/css/bootstrap.min.css' %}" rel="stylesheet">
+<!-- Material Design for Bootstrap -->
+<link href="{% static 'gestion_fournisseur/css/mdb.min.css' %}" rel="stylesheet">
+
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+            {% if detail_devis %}
+            <div><u>Devis du :</u> <strong>{{my_devis.date_devis}}</strong> 
+                destiné au fournisseur <strong>{{fournisseur}}</strong></div>
+            <table class="table table-striped table-hover">
+                <tr class="text-center text-black" style="font-weight: bold;">
+                    <th style="font-weight: bolder;">Libelle</th>
+                    <th style="font-weight: bolder;">Quantité</th>
+                </tr>
+                {% for dd in detail_devis %}
+                <tr class="text-center">
+                    <td>{{ dd.libelle }}</td>
+                    <td>{{ dd.quantite }} produits</td>
+                </tr>
+                {% endfor %}
+                
+            </table>
+            <a href="{% url 'gestion_fournisseur:change_etat_devis' my_devis.id %}"
+            class=" btn btn-success">Confirmer</a>
+            <a style="float: right;" href="{% url 'gestion_fournisseur:approuver_demande' %}"
+            class=" btn btn-warning">Retour >></a>
+            {% elif devis %}
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr class="text-center" style="font-weight: bold;">
+                        <th style="font-weight: bolder;">Date d'envoi du devis</th>
+                        <th style="font-weight: bolder;">Quantité total des produits</th>
+                        <th style="font-weight: bolder;">Action</th>
+                    </tr>
+                </thead>
+                {% for d in devis %}
+                <tr class="text-center">
+                    <td>{{ d.date_devis }}</td>
+                    <td>{{ d.nbre_produit }} produits</td>
+                    <td>
+                        
+                        
+                        {% if d.nbre_produit > 0 %}
+                        <a href="{% url 'gestion_fournisseur:valider_devis' d.id %}" 
+                            class="btn btn-sm btn-outline-info  ">
+                             <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                        </a>
+                        <a href="{% url 'gestion_fournisseur:valider_devis' d.id %}" 
+                            class="btn btn-sm btn-outline-success active ">
+                             <i class="fa fa-telegram fa-2x" aria-hidden="true"></i>
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'gestion_fournisseur:delete_devis' d.id %}" 
+                            class="btn btn-sm btn-outline-danger  ">
+                             <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+             </table>
+             {% else %}
+             <h1>Pas de devis déclarer</h1>
+             <h5>Retournez à la page des fournisseurs pour faire une nouvelle déclaration.</h5>
+            {% endif %}           
+        </div>
+        
+       
+
+    </div>
+
+
+
+</div>

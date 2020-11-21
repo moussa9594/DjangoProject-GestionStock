@@ -1,0 +1,26 @@
+<div class="container">
+    {% include "./header.html" %}
+    <div class="row">
+        <div class="col-lg-2" >
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-8 row flex">
+            {% if all_detail_devis %}
+            {% for devis in all_detail_devis %}
+            <div class="col-6">
+                <div class="card" style="margin-bottom: 4px;" >
+                    <div class="card-body" height="10px" >
+                        <h5 class="card-title">{{ devis.libelle }}</h5>
+                        <h5 class="card-subtitle mb-2 text-muted">Quantité: {{devis.quantite}}</h5>
+                        <a class="btn btn-primary" href="{% url 'gestion_produit:create_produit' devis.id  %}">Ajouter</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,37 @@
+<div class="container">
+    {% include "./header.html" %}
+    {# Load the tag library #}
+    
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8" style="box-shadow: 0px 0px 9px grey;
+                                     border-radius: 6px; padding: 5px 0px 5px 7px;">
+            {% if fournisseur %}
+            <u>Fournisseur:</u>
+                <div style="margin-left: 180px;">
+                    {% if fournisseur.sexe == "Masculin" %}
+                         <h1><i>Mr </i> {{ fournisseur.prenom }}&nbsp;{{ fournisseur.nom }}</h1>
+                    {% else %}
+                         <h1><i>Mme</i> {{ fournisseur.prenom }}&nbsp;{{ fournisseur.nom }}</h1>
+                    {% endif %}
+                </div>
+                <div style="margin-left: 70px;">
+                     <h6>+221 {{ fournisseur.telephone }}</h6>
+                    <h6>{{ fournisseur.email }}</h6>
+                    <h6>{{ fournisseur.adresse }}</h6>
+                </div>
+                <div style="float: right; padding: 0px 5px 0px 0px;">
+                    <a class="btn btn-success" href="{% url 'gestion_fournisseur:demande'  fournisseur.id   %}">
+                        Démarrer un devis
+                    </a>
+                    <a class="btn btn-secondary" href="{% url 'gestion_fournisseur:historique' fournisseur.id%}">
+                        Historique
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+</div>

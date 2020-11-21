@@ -1,0 +1,84 @@
+<div class="container">
+    {% include "./header.html" %}
+    
+    <div class="row">
+        <div class="col-lg-2" >
+            <div class="text-center" style="font-weight: bold;">Categories</div>
+            {% if categories %}
+            {% for categorie in categories %}
+            <div class="categorie">
+            <a href="{% url 'gestion_commande:produits' categorie.id %}" >
+                {{ categorie.libelle }} 
+            </a>
+        </div>
+        {% endfor %}
+            {% endif %}
+        </div>
+        <div class="col-lg-5">
+                <table class="table table-info">
+                    <thead  class="thead-dark">
+                        <tr class="text-center">
+                            <th >Libelle</th>
+                            <th>Prix unitaire</th>
+                        </tr>
+                    </thead>
+                        {% for produit in produits %}
+                        <tr>
+                            <td style="font-weight: bold;">{{produit.libelle}}</td>
+                            <td>
+                                <input  class="text-center" value="{{produit.prix_u}} FCFA" class="prix_u" readonly>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <tr>
+                    <a href="{% url 'gestion_commande:add_order' %}" class="btn btn-outline-success text-center total" >
+                        <i class="fa fa-check fa-lg" ></i>
+                    </a>
+                    <a href="{% url 'gestion_commande:delete_commande' %}" class="btn btn-outline-danger text-center">
+                       <i class="fa fa-trash fa-lg" ></i>
+                    </a>
+                </tr>
+        </div>
+        <div class="col-lg-2" style="margin-left: -30px;">
+            <table class="table table-info">
+                <thead  class="thead-dark">
+                    <tr class="text-center">
+                        <th>Quantité</th>
+                    </tr> 
+                </thead>
+                    {% for qte in paniers.values %}
+                    <tr class="text-center">
+                        <td>
+                            <input  readonly class="text-center qte" type="number"
+                             value="{{qte}}" style="width: 60px; font-weight: bolder;">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+    </div>
+    <div class="col-lg-2" style="margin-left: -30px;">
+        <table class="table table-info">
+            <thead  class="thead-dark">
+                <tr class="text-center">
+                    <th>Sous total</th>
+                </tr> 
+            </thead>
+                {% for st in soustotals %}
+                <tr >
+                    <td>
+                        <input class="text-center text-success" readonly 
+                        type="text" value="{{st}} FCFA" style="font-weight: bold;">
+                    </td>
+                </tr>
+                {% endfor %}
+                
+            </table>
+                <input class="text-center btn btn-danger" readonly 
+                type="text" value="TOTAL= {{total}} FCFA"
+                style="font-weight: bolder; margin-left: 13px; width: 232px; margin-top: -16px;">
+        </div>
+        </div>
+    </div>    
+</div>
+

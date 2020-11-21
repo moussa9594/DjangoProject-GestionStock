@@ -1,0 +1,67 @@
+{% load static %}
+<div class="container">
+    {% include "./header.html" %}
+   
+    <link rel="stylesheet" type="text/css" href="{% static
+        'gestion_produit/style.css' %}">
+
+    <div class="row">
+        <div class="col-lg-3" style="box-shadow: 0px 0px 9px grey;
+            border-radius: 6px; padding: 5px 0px 5px 7px;">
+            <u style="margin-left: 100px;">Fournisseur: </u>
+           
+            <div>
+                <a href="{% url 'gestion_fournisseur:detail' fournisseur.id %}"></a>
+                    {% if fournisseur.sexe == "Masculin" %}
+                    <b><i>Mr </i> {{ fournisseur.prenom }}&nbsp;{{fournisseur.nom }}</b>
+                    {% else %}
+                    <b><i>Mme</i> {{ fournisseur.prenom }}&nbsp;{{fournisseur.nom }}</b>
+                </a>
+                    {% endif %}
+                <div>Tel: {{fournisseur.telephone}}</div>
+                <div>Email: {{fournisseur.email}}</div>
+                <div>Adresse: {{fournisseur.adresse}}</div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <h5>Veuillez saisir le nom du produit que vous souhaitez demander et la quantité.<br>
+            </h5>
+            <form action="{% url 'gestion_fournisseur:add_demande' %}" class="form" method="POST">
+                {% csrf_token %}
+                <div >
+                    <div class="col-lg-4">
+                        Libelle: <input  class="form-control" name="libelle" id="libelle">
+                        Quantité: <input class="form-control" type="number" name="quantite" id="quantite">
+                        <p></p>
+                        <input type="submit" value="continuer" class="btn btn-info">
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        <div class="col-lg-4" style="border-left: 1px solid gray; 
+                    padding: 15px; border-radius: 25px 0px 25px 0px;">
+            <u>Libellés:</u> <u style="float: right;">Quantités:</u><br>
+            {% if none_devis %}
+                <p style="color: red;">{{ none_devis }}</p>
+            {% endif %}
+            {% if all_detail_devis %}
+                {% for detail_devis in all_detail_devis %}
+                <div style="box-shadow:0px 0px 3px gray;">
+                    <span style="font-weight: bold;">{{detail_devis.libelle}}</span><span style="float: right;">{{detail_devis.quantite}}</span>
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% if all_detail_devis.count > 0 %}
+            <div style="width: 100%; margin-top: 10px; margin-left: 100px;">
+                <a href="{% url 'gestion_fournisseur:send_mail' %}" class="btn-sm btn btn-outline-success">Envoyer la demande</a>
+            </div> 
+            {% endif %}
+        </div>
+       
+
+    </div>
+
+
+
+</div>

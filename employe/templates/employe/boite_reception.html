@@ -1,0 +1,52 @@
+{% load static %}
+<div class="container">
+    {% include "./header.html" %}
+   
+    <link rel="stylesheet" type="text/css" href="{% static
+        'gestion_produit/style.css' %}">
+
+    <div class="row">
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr class="text-center">
+                    <th>Expéditeur</th>
+                    <th>Objet</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            {% for message in mes_messages %}
+                {% if message.lire == 0 %}
+                <tr class="text-center" style="font-weight: bold;;" >
+                    <td>{{message.employe}}</td>
+                    <td>{{message.objet}}</td>
+                    <td>
+                        <a href="{% url 'employe:reponse_message' message.id %}">
+                            <i class="fa fa-envelope"></i>
+                        </a>&nbsp;&nbsp;&nbsp;
+                        <a href="#">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr class="text-center" >
+                    <td>{{message.employe}}</td>
+                    <td>{{message.objet}}</td>
+                    <td>
+                        <a href="{% url 'employe:reponse_message' message.id %}">
+                            <i class="fa fa-envelope-open-o"></i>
+                        </a>&nbsp;&nbsp;&nbsp;
+                        <a href="#">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            
+        </table>
+    </div>
+
+
+
+</div>

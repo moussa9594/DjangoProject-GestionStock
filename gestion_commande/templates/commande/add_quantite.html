@@ -1,0 +1,123 @@
+<div class="container">
+    {% include "./header.html" %}
+    
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Attention !!!</strong> Vous avez atteint le seuil de stock.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2" >
+            <div class="text-center" style="font-weight: bold;">Categories</div>
+            {% if categories %}
+            {% for categorie in categories %}
+            <div class="categorie">
+            <a href="{% url 'gestion_commande:produits' categorie.id %}" >
+                {{ categorie.libelle }} 
+            </a>
+        </div>
+        {% endfor %}
+            {% endif %}
+        </div>
+
+        
+
+        <div class="col-lg-1"></div>
+        <div class="col-lg-8">
+            <form action="{% url 'gestion_commande:panier' %}" methode="get"  class="form">
+                {% csrf_token %}
+                <table class="table table-info">
+                    <thead class="thead-dark">
+                            <tr class="text-center ">
+                                <th >Libelle</th>
+                                <th>Prix unitaire</th>
+                                <th>Quantité</th>
+                                <th>Sous total</th>
+                            </tr>
+                        </thead>
+                        <tr class="text-center">
+                            <td style="font-weight: bold;">{{produit.libelle}}</td>
+                            <td>{{produit.prix_u}}FCFA</td>
+                            <td class="text-center">
+                                <input type="hidden" type="number" value="{{produit.id}}" name="produit">
+            <!-- seuil_qte -->  <input type="hidden" type="number" value="{{produit.quantite}}" name="seuil_qte" class="seuil_qte">
+            <!-- prix_u -->     <input type="hidden" value="{{produit.prix_u}}"  class="prix_u">
+                                {% if quantite_exist %}
+            <!-- putqte -->     <input class="putqte text-center" name="quantite" value="{{ quantite_exist }}" type="number" 
+                                  style="width:60px; font-weight: bolder; color: white; background-color: black; border-radius: 7px;" >
+                                {% else %}
+            <!-- putqte -->   <input class="putqte text-center" name="quantite" value="1" type="number" 
+                                 style="width:60px; font-weight: bolder; color: white; background-color: black;  border-radius: 7px;" >
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if sous_total_exist %}
+            <!-- soustotal -->  <input class="soustotal" style="font-weight: bolder; color: white;
+                                 background-color: green; border-radius: 7px;" readonly value="{{sous_total_exist}}" type="text" > FCFA
+                                {% else %}
+            <!-- soustotal --><input class="soustotal text-center" style="font-weight: bolder; color: white;
+                                 background-color: green;  border-radius: 7px;"  readonly value="{{produit.prix_u}}" type="text" > FCFA
+                                {% endif %}
+                            </td>
+                        </tr>
+                        
+                </table>
+                <tr>
+                    <input type="submit" class="btn btn-outline-success text-center" value="Valider la quantité">
+                </tr>
+                
+            </form>
+           
+        </div>
+        <div style="margin-left: 400px; margin-top: -10px;" class="row">
+            <div class="col-lg-3" style="border-left: 1px solid grey;">
+                <strong><i>{{produit.description}}</i></strong> 
+            </div>
+            <div></div>
+            <div class="col-lg-3">
+                <img height="200px" src="{{produit.image1.url}}">  
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <img height="200px" src="{{produit.image2.url }}"> 
+            </div>
+        </div>
+        <!-- return event.charCode >= 48 -->
+        </div>
+       
+    </div>  
+     
+</div>
+
+
+<script language="javascript"></script>
+<script>
+
+    
+    $(document).ready(function(){
+        $('.alert').hide()
+        const val_seuil_qte = parseInt( $('.seuil_qte').val().replace(/\s/g,""))
+        $('.putqte').change(function(){
+            const val_putqte = parseInt( $('.putqte').val().replace(/\s/g,""))
+            if( val_putqte == 0 || val_putqte < 0){
+                $('.putqte').val(1)
+            }
+            if( val_putqte > val_seuil_qte){
+                $('.putqte').val(val_seuil_qte)
+                $('.alert').show()
+                
+            }
+            if( val_putqte <= val_seuil_qte){
+                $('.alert').hide()
+            }
+
+            var prix_u = parseInt( $('.prix_u').val().replace(/\s/g,""))
+            $( '.soustotal').val(
+                 val_putqte * prix_u
+            )
+          })
+      }); 
+</script>
+<!-- parseInt(value); -->
